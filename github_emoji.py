@@ -4,18 +4,9 @@ import xml.etree.ElementTree as etree
 from markdown.extensions import Extension
 from markdown.inlinepatterns import Pattern, SimpleTagPattern
 
-""" Note that the first set of hyphens ((--)) are grouped in parentheses,
-    making our content the second group.  This is because we will be using
-    a generic pattern class provided by Python-Markdown. Specifically, the
-    SimpleTextPattern which will modify the pattern to prepend another 
-    group, and then expects the text content to be found in group(3) of the
-    new regular expression. We add the extra group to force the content we
-    want intogroup(3). 
-    
-    Also note that the content is matched using a non-greedy match (.*?).
-"""
+
 SOURCE = "https://api.github.com/emojis"
-EMOJI_RE = r'(:)([a-zA-Z]*?):'
+EMOJI_RE = r'(:)((?:[\+\-])?[0-9a-zA-Z]*?):'
 
 
 class GheEmoji(Extension):
