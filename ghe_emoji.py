@@ -3,10 +3,12 @@ import json
 import xml.etree.ElementTree as etree
 from markdown.extensions import Extension
 from markdown.inlinepatterns import Pattern, SimpleTagPattern
+from pathlib import Path
 
 
 SOURCE = "https://api.github.com/emojis"
-EMOJI_RE = r'(:)((?:[\+\-])?[0-9a-zA-Z]*?):'
+EMOJI_RE = r'(:)((?:[\+\-])?[_0-9a-zA-Z]*?):'
+SAVE_PATH = "/path/to/pelican_github_emoji/files/"
 
 
 class GheEmoji(Extension):
@@ -31,6 +33,20 @@ class GheEmoji(Extension):
             return GheEmoji(emoji=data)
         except Exception as e:
             print(e)
+
+    def download(self):
+        for tag, url in self.getConfig('emoji').items():
+            file = url.split('/')[-1]
+            with requests.get(url, stream=True) as r:
+                r.raise_for_status()
+                with open(Path(f"{SAVE_PATH}{file}.png"), 'xb') as f:
+                    for chunk in r.iter_content(chunk_size=8192):
+                        # If you have chunk encoded response uncomment if
+                        # and set chunk_size parameter to None.
+                        # if chunk:
+                        f.write(chunk)
+
+# x = m.getConfig('emojis')
 
 
 class EmojiInlinePattern(Pattern):
