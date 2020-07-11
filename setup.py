@@ -3,7 +3,6 @@ try:
 except ImportError:
     from distutils.core import setup, find_packages
 
-
 setup(
     name='ghe_emoji',
     version='0.5',
@@ -21,4 +20,3 @@ setup(
         "License :: GNU General Public License v3 or later (GPLv3+)",
         "Operating System :: OS Independent"]
 )
-

@@ -1,6 +1,8 @@
 import markdown
 from ghe_emoji import GheEmoji
 
+m = GheEmoji.load_from_github()
+m.download()
 
 txt = """
  line 1 :fight:
@@ -19,4 +21,3 @@ assert result == """<p>line 1
 #
 # thumbs_up = markdown.markdown(plus_one, extensions=[GheEmoji.load_from_github()])
 # print(thumbs_up)
-

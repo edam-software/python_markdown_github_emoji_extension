@@ -5,10 +5,9 @@ from markdown.extensions import Extension
 from markdown.inlinepatterns import Pattern, SimpleTagPattern
 from pathlib import Path
 
-
 SOURCE = "https://api.github.com/emojis"
 EMOJI_RE = r'(:)((?:[\+\-])?[_0-9a-zA-Z]*?):'
-SAVE_PATH = "/path/to/pelican_github_emoji/files/"
+SAVE_PATH = "/Users/airbook/PycharmProjects/pelican_github_emoji/files/"
 
 
 class GheEmoji(Extension):
@@ -34,19 +33,29 @@ class GheEmoji(Extension):
         except Exception as e:
             print(e)
 
-    def download(self):
-        for tag, url in self.getConfig('emoji').items():
-            file = url.split('/')[-1]
-            with requests.get(url, stream=True) as r:
-                r.raise_for_status()
-                with open(Path(f"{SAVE_PATH}{file}.png"), 'xb') as f:
+    @staticmethod
+    def fetch_tag(tag, url):
+        file = url.split('/')[-1]
+        with requests.get(url, stream=True) as r:
+            r.raise_for_status()
+            try:
+                with open(Path(f"{SAVE_PATH}{tag}.png"), 'xb') as f:
                     for chunk in r.iter_content(chunk_size=8192):
                         # If you have chunk encoded response uncomment if
                         # and set chunk_size parameter to None.
                         # if chunk:
                         f.write(chunk)
+            except FileExistsError as failed:
+                print(failed)
+                return
 
-# x = m.getConfig('emojis')
+    def download(self):
+        for tag, url in self.getConfig('emoji').items():
+            try:
+                self.fetch_tag(tag, url)
+            except requests.exceptions.HTTPError as notfound:
+                print(notfound)
+                continue
 
 
 class EmojiInlinePattern(Pattern):
