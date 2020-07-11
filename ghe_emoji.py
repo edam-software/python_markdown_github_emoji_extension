@@ -1,3 +1,5 @@
+#!/bin/env python3
+
 import requests
 import json
 import xml.etree.ElementTree as etree
@@ -76,4 +78,4 @@ class EmojiInlinePattern(Pattern):
 
 
 if __name__ == '__main__':
-    print("This is an extension to Markdown please import it")
+    print("This is an extension to Markdown please import it to retrieve icon URLs")
