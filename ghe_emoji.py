@@ -11,7 +11,7 @@ from pathlib import Path
 
 SOURCE = "https://api.github.com/emojis"
 EMOJI_RE = r'(:)((?:[\+\-])?[_0-9a-zA-Z]*?):'
-SAVE_PATH = "/Users/airbook/PycharmProjects/pelican_github_emoji/files/"
+SAVE_PATH = "./pelican_github_emoji/files/"
 
 
 class GheEmoji(Extension):
