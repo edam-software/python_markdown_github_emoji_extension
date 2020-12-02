@@ -1,5 +1,7 @@
 #!/bin/env python3
 
+import aiohttp
+import asyncio
 import requests
 import json
 import xml.etree.ElementTree as etree
@@ -36,28 +38,34 @@ class GheEmoji(Extension):
             print(e)
 
     @staticmethod
-    def fetch_tag(tag, url):
-        file = url.split('/')[-1]
-        with requests.get(url, stream=True) as r:
-            r.raise_for_status()
-            try:
-                with Path(f"{SAVE_PATH}{tag}.png").open('xb') as f:
-                    for chunk in r.iter_content(chunk_size=8192):
-                        # If you have chunk encoded response uncomment if
-                        # and set chunk_size parameter to None.
-                        # if chunk:
-                        f.write(chunk)
-            except FileExistsError as failed:
-                print(failed)
-                return
+    async def get_bytes(url: str) -> bytes:
+        async with aiohttp.ClientSession() as sesh:
+            async with sesh.get(url) as payload:
+                data = await payload.read()
+                print(f"Finished downloading {url}")
+                return data
 
-    def download(self):
+    @staticmethod
+    async def write_bytes(path: str, data: bytes) -> bool:
+        try:
+            with Path(f"{SAVE_PATH}{path}.png").open('xb') as file_name:
+                file_name.write(data)
+                print(f"Finished writing {path}")
+        except FileExistsError as failed:
+            print(failed)
+            return
+
+    @staticmethod
+    async def fetch_task(tag: str, url: str):
+        file = url.split('/')[-1]
+        content = await GheEmoji.get_bytes(url)
+        await GheEmoji.write_bytes(tag, content)
+
+    async def download(self):
+        tasks = []
         for tag, url in self.getConfig('emoji').items():
-            try:
-                self.fetch_tag(tag, url)
-            except requests.exceptions.HTTPError as notfound:
-                print(notfound)
-                continue
+            tasks.append(self.fetch_task(tag, url))
+        await asyncio.wait(tasks)
 
 
 class EmojiInlinePattern(Pattern):
