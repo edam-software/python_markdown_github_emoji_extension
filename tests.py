@@ -1,8 +1,15 @@
 import markdown
 from ghe_emoji import GheEmoji
+from datetime import datetime
+import asyncio
 
+
+t0 = datetime.now()
 m = GheEmoji.load_from_github()
-m.download()
+print(f"The time is now: {t0}")
+asyncio.run(m.download())
+dt = datetime.now() - t0
+print(f"This took {dt} to run")
 
 txt = """
  line 1 :fight:
