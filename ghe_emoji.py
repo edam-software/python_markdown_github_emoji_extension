@@ -49,7 +49,7 @@ class GheEmoji(Extension):
                         f.write(chunk)
             except FileExistsError as failed:
                 print(failed)
-                return`
+                return
 
     def download(self):
         for tag, url in self.getConfig('emoji').items():
