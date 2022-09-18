@@ -1,0 +1,4 @@
+markdown
+pelican[markdown]
+aiohttp
+pelican-youtube
