@@ -1,12 +1,35 @@
 # pelican_github_emoji
 Markdown Extension to provide Github emoji glyphs from the public [list](https://api.github.com/emojis) in Pelican blogs.
 
-This was you can simply use :emoji_name: to add cool Github emojis on your Python Markdown. In my case, on my Pelican blog at https://blog.ericarellano.tech.
+###
+This way you can simply use :emoji_name: to add cool Github emojis on your Python Markdown. In my case, on my Pelican blog at https://blog.ericarellano.tech.
+
+## How To:
+
+Download this repo, run 
+
+    python setup.py install    
+
+Add this to your pelicanconf.py:
+
+    from ghe_emoji import GheEmoji
+
+    MARKDOWN = {
+        'extensions': [GheEmoji.load_from_github()],
+        'extension_configs': {
+            'markdown.extensions.codehilite': {'css_class': 'highlight'},
+            'markdown.extensions.toc': {},
+            'markdown.extensions.extra': {},
+            'markdown.extensions.meta': {},
+        },
+        'output_format': 'html5',
+    }
 
 
+##
+Thanks to https://gist.github.com/rxaviers/7360908 for this list
 
-
-Thanks to https://gist.github.com/rxaviers/7360908 for this list, please click the link for better format.
+Please click the link for better format.
 
 
 :bowtie: :bowtie:	😄 :smile:	😆 :laughing:
