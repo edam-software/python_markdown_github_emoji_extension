@@ -1,4 +1,4 @@
-# pelican_github_emoji
+# python_markdown_github_emoji
 Markdown Extension to provide Github emoji glyphs from the public [list](https://api.github.com/emojis) in Pelican blogs.
 
 ###
@@ -12,7 +12,7 @@ Download this repo, run
 
 Add this to your pelicanconf.py or wherever you are using Python Markdown (latest version tested is 3.4.1).
 
-    from ghe_emoji import GheEmoji
+    from python_markdown_gh_emoji import GheEmoji
 
     MARKDOWN = {
         'extensions': [GheEmoji.load_from_github()],
