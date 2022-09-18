@@ -10,7 +10,7 @@ Download this repo, run
 
     python setup.py install    
 
-Add this to your pelicanconf.py:
+Add this to your pelicanconf.py or wherever you are using Python Markdown (latest version tested is 3.4.1).
 
     from ghe_emoji import GheEmoji
 
