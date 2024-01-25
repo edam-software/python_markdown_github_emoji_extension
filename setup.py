@@ -9,7 +9,7 @@ setup(
     version='0.9',
     packages=find_packages(),
     py_modules=['python_markdown_gh_emoji'],
-    install_requires=['markdown>=3.4', 'aiohttp'],
+    install_requires=['markdown>=3.4', 'aiohttp', 'requests'],
     python_requires='>3.10',
     url='https://github.com/edam-software/github_emojis',
     license="OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
